@@ -3,6 +3,13 @@ export default {
 
   state: {
     isShow: true,
+    list: [],
+  },
+
+  subscriptions: {
+    setup({ dispatch, history }) {
+      // 初始化
+    },
   },
 
   reducers: {
@@ -20,4 +27,6 @@ export default {
       };
     },
   },
+
+  // 异步-redux-saga
 };
