@@ -13,7 +13,15 @@ class Cinema extends Component {
   };
 
   render() {
-    return <div>Cinema</div>;
+    return (
+      <div>
+        <ul>
+          {this.props.list.map((item) => {
+            return <li key={item.cinemaId}>{item.name}</li>;
+          })}
+        </ul>
+      </div>
+    );
   }
 }
 
