@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { IndexBar, List } from 'antd-mobile';
+import { history, connect } from 'umi';
 
-export default function City() {
+function City(props: any) {
   const [list, setList] = useState<any>([]);
 
+  /* ---------------------------------- 过滤城市 ---------------------------------- */
   const filterCity = (cityList: any) => {
     // 获取A-Z字母
     const letterArr: Array<string> = [];
@@ -29,6 +31,20 @@ export default function City() {
     return newList;
   };
 
+  /* ---------------------------------- 点击城市 ---------------------------------- */
+  const changeCity = (item: any) => {
+    console.log(item.name, item.cityId);
+    props.dispatch({
+      type: 'city/changeCity',
+      payload: {
+        cityName: item.name,
+        cityId: item.cityId,
+      },
+    });
+
+    history.push('/cinema');
+  };
+
   useEffect(() => {
     fetch('https://m.maizuo.com/gateway?k=9871703', {
       headers: {
@@ -42,6 +58,7 @@ export default function City() {
         setList(filterCity(res.data.cities));
       });
   }, []);
+
   return (
     <div style={{ height: window.innerHeight }}>
       <IndexBar>
@@ -51,7 +68,9 @@ export default function City() {
             <IndexBar.Panel index={title} title={title} key={title}>
               <List>
                 {items.map((item: any, index: number) => (
-                  <List.Item key={index}>{item.name}</List.Item>
+                  <List.Item key={index} onClick={() => changeCity(item)}>
+                    {item.name}
+                  </List.Item>
                 ))}
               </List>
             </IndexBar.Panel>
@@ -61,3 +80,5 @@ export default function City() {
     </div>
   );
 }
+
+export default connect(() => ({}))(City);
