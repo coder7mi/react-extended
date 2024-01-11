@@ -26,6 +26,10 @@ const iconList = {
 function SideMenu(props) {
   const [menu, setMenu] = useState([])
 
+  const {
+    role: { rights }
+  } = JSON.parse(localStorage.getItem('token'))
+
   const onClick = (e) => {
     props.history.push(e.key)
   }
@@ -47,8 +51,7 @@ function SideMenu(props) {
   }
 
   useEffect(() => {
-    axios('http://localhost:5000/rights?_embed=children').then((res) => {
-      console.log(res.data)
+    axios('/rights?_embed=children').then((res) => {
       setMenu(renderMenu(res.data))
     })
   }, [])

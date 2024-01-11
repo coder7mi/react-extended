@@ -58,7 +58,7 @@ export default function RightList() {
   ]
 
   useEffect(() => {
-    axios('http://localhost:5000/rights?_embed=children').then((res) => {
+    axios('/rights?_embed=children').then((res) => {
       const list = res.data
       list.forEach((item) => {
         if (item.children.length === 0) {
@@ -74,7 +74,6 @@ export default function RightList() {
     confirm({
       title: '确认删除?',
       icon: <ExclamationCircleOutlined />,
-      content: 'Some descriptions',
       onOk() {
         console.log('OK')
         deleteMethod(item)
@@ -89,12 +88,12 @@ export default function RightList() {
   const deleteMethod = (item) => {
     if (item.grade === 1) {
       setDataSource(dataSource.filter((data) => data.id !== item.id))
-      axios.delete(`http://localhost:5000/rights/${item.id}`)
+      axios.delete(`/rights/${item.id}`)
     } else {
       let list = dataSource.filter((data) => data.id === item.rightId)
       list[0].children = list[0].children.filter((data) => data.id !== item.id)
       setDataSource([...dataSource])
-      axios.delete(`http://localhost:5000/children/${item.id}`)
+      axios.delete(`/children/${item.id}`)
     }
   }
 
@@ -103,11 +102,11 @@ export default function RightList() {
     setDataSource([...dataSource])
 
     if (item.grade === 1) {
-      axios.patch(`http://localhost:5000/rights/${item.id}`, {
+      axios.patch(`/rights/${item.id}`, {
         pagepermisson: item.pagepermisson
       })
     } else {
-      axios.patch(`http://localhost:5000/children/${item.id}`, {
+      axios.patch(`/children/${item.id}`, {
         pagepermisson: item.pagepermisson
       })
     }

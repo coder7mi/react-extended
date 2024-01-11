@@ -3,13 +3,24 @@ import { Layout } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 import style from './TopHeader.module.scss'
 import { Dropdown, Avatar } from 'antd'
+import { withRouter } from 'react-router-dom'
 
 const { Header } = Layout
 
-export default function TopHeader(props) {
+function TopHeader(props) {
+  const {
+    role: { roleName },
+    username
+  } = JSON.parse(localStorage.getItem('token'))
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    props.history.replace('/login')
+  }
+
   const items = [
-    { label: '管理员', key: 'item-1' }, // 菜单项务必填写 key
-    { label: '退出', key: 'item-2', danger: true }
+    { label: <span>{roleName}</span>, key: 'item-1' },
+    { label: <span onClick={logout}>退出</span>, key: 'item-2', danger: true }
   ]
 
   return (
@@ -27,7 +38,9 @@ export default function TopHeader(props) {
       })}
 
       <div className={style.user}>
-        <span className={style.text}>欢迎Admin</span>
+        <span className={style.text}>
+          欢迎<b style={{ color: '#1890ff' }}>{username}</b>
+        </span>
         <Dropdown menu={{ items }}>
           <Avatar size={40} icon={<UserOutlined />} />
         </Dropdown>
@@ -35,3 +48,5 @@ export default function TopHeader(props) {
     </Header>
   )
 }
+
+export default withRouter(TopHeader)
