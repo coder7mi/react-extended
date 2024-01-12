@@ -16,6 +16,8 @@ import Published from '../../views/sandBox/publish-manage/Published'
 import Sunset from '../../views/sandBox/publish-manage/Sunset'
 import NewsPreview from '../../views/sandBox/news-manage/NewsPreview'
 import NewsUpdate from '../../views/sandBox/news-manage/NewsUpdate'
+import { Spin } from 'antd'
+import { connect } from 'react-redux'
 
 const LocalRouterMap = {
   '/home': Home,
@@ -34,7 +36,7 @@ const LocalRouterMap = {
   '/publish-manage/sunset': Sunset
 }
 
-export default function NewsRouter() {
+function NewsRouter(props) {
   const [BackRouteList, setBackRouteList] = useState([])
 
   useEffect(() => {
@@ -56,24 +58,34 @@ export default function NewsRouter() {
   }
 
   return (
-    <Switch>
-      {BackRouteList.map((item) => {
-        if (checkRoute(item) && checkUserPermission(item)) {
-          return (
-            <Route
-              path={item.key}
-              key={item.key}
-              component={LocalRouterMap[item.key]}
-              exact
-            ></Route>
-          )
-        }
-        return null
-      })}
+    <Spin size="large" spinning={props.isLoading}>
+      <Switch>
+        {BackRouteList.map((item) => {
+          if (checkRoute(item) && checkUserPermission(item)) {
+            return (
+              <Route
+                path={item.key}
+                key={item.key}
+                component={LocalRouterMap[item.key]}
+                exact
+              ></Route>
+            )
+          }
+          return null
+        })}
 
-      <Redirect from="/" to="/home" exact />
+        <Redirect from="/" to="/home" exact />
 
-      {BackRouteList.length > 0 && <Route path="*" component={NoPermission} />}
-    </Switch>
+        {BackRouteList.length > 0 && <Route path="*" component={NoPermission} />}
+      </Switch>
+    </Spin>
   )
 }
+
+const mapStateToProps = ({ LoadingReducer: { isLoading } }) => {
+  return {
+    isLoading
+  }
+}
+
+export default connect(mapStateToProps)(NewsRouter)

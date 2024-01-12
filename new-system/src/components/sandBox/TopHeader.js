@@ -4,10 +4,13 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/
 import style from './TopHeader.module.scss'
 import { Dropdown, Avatar } from 'antd'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const { Header } = Layout
 
 function TopHeader(props) {
+  console.log(props)
+
   const {
     role: { roleName },
     username
@@ -32,9 +35,9 @@ function TopHeader(props) {
         justifyContent: 'space-between'
       }}
     >
-      {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+      {React.createElement(props.isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: 'trigger',
-        onClick: () => props.handleCoollapsed()
+        onClick: () => props.changeCollapsed()
       })}
 
       <div className={style.user}>
@@ -49,4 +52,18 @@ function TopHeader(props) {
   )
 }
 
-export default withRouter(TopHeader)
+const mapStateToProps = ({ CollapsedReducer: { isCollapsed } }) => {
+  return {
+    isCollapsed
+  }
+}
+
+const mapDispatchToProps = {
+  changeCollapsed() {
+    return {
+      type: 'change_collapsed'
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TopHeader))

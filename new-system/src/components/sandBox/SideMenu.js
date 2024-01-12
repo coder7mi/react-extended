@@ -11,6 +11,7 @@ import {
 import style from './SideMenu.module.scss'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 const { Sider } = Layout
 
@@ -60,7 +61,7 @@ function SideMenu(props) {
   const openKeys = ['/' + props.location.pathname.split('/')[1]]
 
   return (
-    <Sider trigger={null} collapsible collapsed={props.collapsed}>
+    <Sider trigger={null} collapsible collapsed={props.isCollapsed}>
       <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
         <div className={style.logo}>新闻发布系统</div>
         <div style={{ flex: 1, overflow: 'auto' }}>
@@ -78,4 +79,10 @@ function SideMenu(props) {
   )
 }
 
-export default withRouter(SideMenu)
+const mapStateToProps = ({ CollapsedReducer: { isCollapsed } }) => {
+  return {
+    isCollapsed
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(SideMenu))

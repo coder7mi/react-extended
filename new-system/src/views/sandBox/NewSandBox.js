@@ -10,23 +10,16 @@ import 'nprogress/nprogress.css'
 const { Content } = Layout
 
 export default function NewSandBox() {
-  const [collapsed, setCollapsed] = useState(false)
-
   NProgress.start()
   useEffect(() => {
     NProgress.done()
   })
   return (
     <Layout>
-      <SideMenu collapsed={collapsed}></SideMenu>
+      <SideMenu></SideMenu>
 
       <Layout className="site-layout">
-        <TopHeader
-          collapsed={collapsed}
-          handleCoollapsed={() => {
-            setCollapsed(!collapsed)
-          }}
-        ></TopHeader>
+        <TopHeader></TopHeader>
 
         <Content
           className="site-layout-background"

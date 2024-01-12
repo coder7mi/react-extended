@@ -410,8 +410,8 @@
   "categories": [
     {
       "id": 1,
-      "title": "时事新闻123",
-      "value": "时事新闻123"
+      "title": "时事新闻",
+      "value": "时事新闻"
     },
     {
       "id": 2,
@@ -503,7 +503,7 @@
       "publishState": 2,
       "createTime": 1615778694831,
       "star": 511,
-      "view": 833,
+      "view": 4,
       "id": 2,
       "publishTime": 1615778911028
     },
@@ -517,8 +517,8 @@
       "auditState": 2,
       "publishState": 2,
       "createTime": 1615778715619,
-      "star": 600,
-      "view": 984,
+      "star": 602,
+      "view": 991,
       "id": 3,
       "publishTime": 1615778911762
     },

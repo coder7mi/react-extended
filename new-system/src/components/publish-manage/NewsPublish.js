@@ -3,7 +3,6 @@ import { Table, Button } from 'antd'
 import { withRouter } from 'react-router-dom'
 
 function NewsPublish(props) {
-  console.log(props)
   const columns = [
     {
       title: '新闻标题',
